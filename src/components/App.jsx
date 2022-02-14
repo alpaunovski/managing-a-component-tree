@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import ToDoItem from "./ToDoItem";
+import {v4 as uuidv4} from 'uuid';
+
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -30,8 +33,9 @@ function App() {
       <div>
         <ul>
           {items.map(todoItem => (
-            <li>{todoItem}</li>
-          ))}
+            //Using the UUID package to generate unique IDs for each ToDoItem
+            <ToDoItem key={uuidv4()} text={todoItem}
+            />))}
         </ul>
       </div>
     </div>
