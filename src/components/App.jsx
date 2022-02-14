@@ -19,6 +19,11 @@ function App() {
     setInputText("");
   }
 
+  function deleteItem(props) {
+    setItems(prevItems => {
+      console.log("Triggered deleteItem on item " + props.id);
+  })};
+
   return (
     <div className="container">
       <div className="heading">
@@ -32,9 +37,9 @@ function App() {
       </div>
       <div>
         <ul>
-          {items.map(todoItem => (
+          {items.map((todoItem, index) => (
             //Using the UUID package to generate unique IDs for each ToDoItem
-            <ToDoItem key={uuidv4()} text={todoItem}
+            <ToDoItem key={index} id={index} text={todoItem} onChecked={deleteItem}
             />))}
         </ul>
       </div>
