@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import ToDoItem from "./ToDoItem";
-import {v4 as uuidv4} from 'uuid';
 
 
 function App() {
   const [inputText, setInputText] = useState("");
+  // items is a stateful array, initialized to an empty array.
   const [items, setItems] = useState([]);
 
+  // handleChange is a function that takes an event as an argument. The event is the user's input. As the user types, the inputText state is updated.
   function handleChange(event) {
     const newValue = event.target.value;
     setInputText(newValue);
@@ -14,15 +15,24 @@ function App() {
 
   function addItem() {
     setItems(prevItems => {
+      // Using the Spread Operator
       return [...prevItems, inputText];
     });
     setInputText("");
   }
 
-  function deleteItem(props) {
-    setItems(prevItems => {
-      console.log("Triggered deleteItem on item " + props.id);
-  })};
+  function deleteItem(id) {
+      // console.log("Triggered deleteItem on item ");
+      //console.log(id);
+      setItems(prevItems => {
+        // Filter out the item with the given id
+        // We are returning a new array of items with the specific item missing.
+          return prevItems.filter((item, index) => {
+              return index !== id;
+          });
+      });
+
+  };
 
   return (
     <div className="container">
@@ -38,7 +48,6 @@ function App() {
       <div>
         <ul>
           {items.map((todoItem, index) => (
-            //Using the UUID package to generate unique IDs for each ToDoItem
             <ToDoItem key={index} id={index} text={todoItem} onChecked={deleteItem}
             />))}
         </ul>
